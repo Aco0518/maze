@@ -133,11 +133,19 @@ static void write_leaderboard(double records[LEADERBOARD_ROWS][LEADERBOARD_LIMIT
 
 	for (row = 0; row < LEADERBOARD_ROWS; row++) {
 		sort_records(records[row], counts[row]);
-		for (col = 0; col < counts[row]; col++) {
+		
+		// 실제 기록의 개수와 상관없이, 무조건 10개(LEADERBOARD_LIMIT)를 출력합니다.
+		for (col = 0; col < LEADERBOARD_LIMIT; col++) {
 			if (col > 0) {
 				fprintf(leaderboard, " ");
 			}
-			fprintf(leaderboard, "%.3lf", records[row][col]);
+			
+			// 유효한 기록이 있는 칸은 그 기록을 쓰고, 남는 칸은 0.000으로 채워줍니다.
+			if (col < counts[row]) {
+				fprintf(leaderboard, "%.3lf", records[row][col]);
+			} else {
+				fprintf(leaderboard, "0.000");
+			}
 		}
 		fprintf(leaderboard, "\n");
 	}
@@ -359,13 +367,15 @@ int maze(int nando) {
 		gotoxy(plx*2-1,ply+1);
 		//exit(0);
 		if (plx == endpointx && ply == endpointy) {
-			//SetConsoleOutputCP(949);
 			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
-			en=clock();
-			double record=(double)en-st;
-			leaderboard_write(nando, record);
-			record/=1000;
+			en = clock();
+			
+			double record = (double)en - st;
+			record /= 1000.0;                 // ★ 여기서 먼저 초(Second) 단위로 변환!
+			
+			leaderboard_write(nando, record); // 이제 23.364가 정상적으로 넘어갑니다.
 			wwcd(record);
+			
 			(void)_getch();
 			return 0;
 		}
