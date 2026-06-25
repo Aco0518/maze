@@ -134,13 +134,11 @@ static void write_leaderboard(double records[LEADERBOARD_ROWS][LEADERBOARD_LIMIT
 	for (row = 0; row < LEADERBOARD_ROWS; row++) {
 		sort_records(records[row], counts[row]);
 		
-		// 실제 기록의 개수와 상관없이, 무조건 10개(LEADERBOARD_LIMIT)를 출력합니다.
 		for (col = 0; col < LEADERBOARD_LIMIT; col++) {
 			if (col > 0) {
 				fprintf(leaderboard, " ");
 			}
 			
-			// 유효한 기록이 있는 칸은 그 기록을 쓰고, 남는 칸은 0.000으로 채워줍니다.
 			if (col < counts[row]) {
 				fprintf(leaderboard, "%.3lf", records[row][col]);
 			} else {
@@ -374,7 +372,7 @@ int maze(int nando) {
 			record /= 1000.0;                 // ★ 여기서 먼저 초(Second) 단위로 변환!
 			
 			leaderboard_write(nando, record); // 이제 23.364가 정상적으로 넘어갑니다.
-			wwcd(record);
+			wwcd(record);	
 			
 			(void)_getch();
 			return 0;
@@ -623,15 +621,15 @@ void Print_LeaderBoard() {
    int first_key = 0, second_key = 0;
    float time_data[4][10] = { 0 };
    FILE* Leaderboard = fopen("Leaderboard.txt", "r");
+   
    if (Leaderboard == NULL) {
       printf("아직 기록이 없습니다.");
       return;
    }
+   
    system("cls");
 
-   //while (fscanf(Leaderboard, "%f", &time_data[data_cnt]) != EOF) {
-   //   data_cnt++;
-   //}
+   // 파일에서 이미 정렬된 10개의 데이터를 읽어옵니다.
    for (int i = 0; i < 4; i++) {
       for (int j = 0; j < 10; j++) {
          fscanf(Leaderboard, "%f", &time_data[i][j]);
@@ -640,17 +638,7 @@ void Print_LeaderBoard() {
 
    fclose(Leaderboard);
 
-   for (int i = 0; i < 4; i++) {
-        for (int j = 0; j < 9; j++) {
-            for (int k = 0; k < 9 - j; k++) {
-                if (time_data[i][k] > time_data[i][k + 1]) {
-                    float temp = time_data[i][k];
-                    time_data[i][k] = time_data[i][k + 1];
-                    time_data[i][k + 1] = temp;
-                }
-            }
-        }
-    }
+   // (기존에 있던 중복 버블 정렬 로직은 완전히 삭제했습니다!)
 
    while (1) {
       system("cls");
@@ -669,12 +657,16 @@ void Print_LeaderBoard() {
          printf("(Extreme) ---\n\n");
          break;
       }
+      
       int rank = 1;
       for (int i = 0; i < 10; i++) {
-         if (time_data[level][i] != 0.0f) 
-            printf("%d등: %.1f초\n\n", rank, time_data[level][i]), rank++;
-         
+         // 이미 파일에 정렬된 상태이므로, 0.0이 아닌 것만 차례대로 출력합니다.
+         if (time_data[level][i] != 0.0f) {
+            printf("%d등: %.1f초\n\n", rank, time_data[level][i]);
+            rank++;
+         }
       }
+      
       while (1) {
          first_key = _getch();
          if (first_key == '\b')
