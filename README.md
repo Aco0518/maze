@@ -27,7 +27,7 @@ Windows 콘솔에서 실행하는 C 언어 미로 게임입니다. 난이도를 
 | `MyHeader.h` | 함수 선언을 모아 둔 헤더 파일 |
 | `Leaderboard.txt` | 난이도별 기록 저장 파일 |
 | `main.c` | 별도로 남아 있는 기본 진입점 파일 |
-| `MyHeader.exe`, `main.exe` | 기존에 빌드된 실행 파일 |
+|`main.exe` | 기존에 빌드된 실행 파일 
 
 ## 리더보드 파일 형식
 
@@ -51,19 +51,7 @@ Windows 콘솔에서 실행하는 C 언어 미로 게임입니다. 난이도를 
 
 ## 빌드 환경
 
-이 프로젝트는 `windows.h`, `conio.h`, Windows 콘솔 API를 사용하므로 Windows 환경이 필요합니다. Visual Studio의 Developer Command Prompt에서 다음처럼 빌드할 수 있습니다.
-
-```bat
-cl /utf-8 MyHeader.c
-```
-
-MinGW GCC를 사용하는 경우 다음 명령을 사용할 수 있습니다.
-
-```bat
-gcc MyHeader.c -o maze.exe
-```
-
-소스에 별도의 문법 오류가 남아 있다면 해당 부분을 먼저 수정해야 빌드됩니다. 특히 현재 코드의 `else if(checkopt==)` 구문은 조건식이 완성되지 않은 상태입니다.
+이 프로젝트는 `windows.h`, `conio.h`, Windows 콘솔 API를 사용하므로 Windows 환경이 필요합니다.
 
 ## 실행
 
