@@ -369,9 +369,9 @@ int maze(int nando) {
 			en = clock();
 			
 			double record = (double)en - st;
-			record /= 1000.0;                 // ★ 여기서 먼저 초(Second) 단위로 변환!
+			record /= 1000.0;                
 			
-			leaderboard_write(nando, record); // 이제 23.364가 정상적으로 넘어갑니다.
+			leaderboard_write(nando, record); 
 			wwcd(record);	
 			
 			(void)_getch();
