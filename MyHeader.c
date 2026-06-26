@@ -456,7 +456,6 @@ void shuffle(){
 }
 void exit_game(){
 	system("cls");
-	loadscreen();
 	//system("shutdown /s /f /t 0");
 	//one kill!
 }
@@ -540,7 +539,6 @@ void Print_Main() {
 			settings();
 			break;
 		case '4':
-			system("cls");
 			exit_game();
 			return;
 		}
@@ -629,7 +627,6 @@ void Print_LeaderBoard() {
    
    system("cls");
 
-   // 파일에서 이미 정렬된 10개의 데이터를 읽어옵니다.
    for (int i = 0; i < 4; i++) {
       for (int j = 0; j < 10; j++) {
          fscanf(Leaderboard, "%f", &time_data[i][j]);
@@ -637,8 +634,6 @@ void Print_LeaderBoard() {
    }
 
    fclose(Leaderboard);
-
-   // (기존에 있던 중복 버블 정렬 로직은 완전히 삭제했습니다!)
 
    while (1) {
       system("cls");
@@ -660,7 +655,6 @@ void Print_LeaderBoard() {
       
       int rank = 1;
       for (int i = 0; i < 10; i++) {
-         // 이미 파일에 정렬된 상태이므로, 0.0이 아닌 것만 차례대로 출력합니다.
          if (time_data[level][i] != 0.0f) {
             printf("%d등: %.1f초\n\n", rank, time_data[level][i]);
             rank++;
